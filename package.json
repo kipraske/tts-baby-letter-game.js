@@ -1,0 +1,14 @@
+{
+  "name": "tts-letter-game",
+  "version": "0.0.1",
+  "description": "A simple letter game that I am going to put on the raspberry pi for my baby to bang on a keyboard and hear the letters that she hits.",
+  "author": "Kristofer Raske <kip.raske@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kipraske/tts-letter-game.js"
+  },
+  "dependencies": {
+    "keypress": "^0.2.1",
+    "say": "^0.6.0"
+  }
+}
