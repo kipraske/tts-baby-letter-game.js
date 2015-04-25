@@ -2,16 +2,14 @@ var say = require('say');
 var keypress = require('keypress');
 
 function checkQuit(key){
-    if (key && key.ctrl && key.name === 'c') {
-	process.stdin.pause();
-    }
+    return (key && key.ctrl && key.name === 'c');
 }
 
-function checkSettingChange(key){
+function checkSettingsChange(key){
 
 }
 
-function changeSetting(){
+function changeSetting(key){
 
 }
 
@@ -24,7 +22,7 @@ function checkSpeakWords(key){
 }
 
 function speakWords(){
-    
+
 }
 
 keypress(process.stdin);
@@ -32,4 +30,16 @@ process.stdin.setRawMode(true);
 
 process.stdin.on('keypress', function (ch, key) {
     console.log(ch, key);
+
+    if (checkQuit()){
+	process.exit();
+    }
+    if (checkSettingsChange(key)){
+	changeSetting(key);
+    }
+    speakLetter(ch);
+
+    if (checkSpeakWords()){
+	speakWords();
+    }
 });
