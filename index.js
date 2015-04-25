@@ -42,12 +42,10 @@ function checkSpeakWords(key) {
 	return false;
     }
 
-    return (key.name === '\n');
+    return (key.name === 'return');
 }
 
 process.stdin.on('keypress', function (ch, key) {
-    console.log(ch, key, wordsBuffer);
-
     if (checkQuit(key)) {
 	process.exit();
     }
