@@ -31,7 +31,7 @@ process.stdin.setRawMode(true);
 process.stdin.on('keypress', function (ch, key) {
     console.log(ch, key);
 
-    if (checkQuit()){
+    if (checkQuit(key)){
 	process.exit();
     }
     if (checkSettingsChange(key)){
@@ -39,7 +39,7 @@ process.stdin.on('keypress', function (ch, key) {
     }
     speakLetter(ch);
 
-    if (checkSpeakWords()){
+    if (checkSpeakWords(key)){
 	speakWords();
     }
 });
