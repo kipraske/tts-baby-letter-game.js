@@ -14,6 +14,10 @@ module.exports = {
 
     // If set to true, we will keep a history of letters typed which will
     // all be read when you hit enter
-    wordMode: true
+    wordMode: true,
+
+    // If set to true, we will output to the console rather than speaking
+    // Useful for debugging when you don't have festival working
+    silentMode: true
 };
 
