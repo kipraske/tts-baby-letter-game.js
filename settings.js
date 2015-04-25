@@ -10,7 +10,7 @@ module.exports = {
     canChangeSettings: true,
 
     // Which voice you want to use. null will be the default festival voice
-    defaultVoice: null,
+    voice: null,
 
     // If set to true, we will keep a history of letters typed which will
     // all be read when you hit enter
