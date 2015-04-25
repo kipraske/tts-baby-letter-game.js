@@ -1,15 +1,16 @@
 var settings = require('./settings');
 var say = require('say');
 var keypress = require('keypress');
+var wordsBuffer = '';
 
 keypress(process.stdin);
 process.stdin.setRawMode(true);
 
-if (settings.silentMode){
-    say.speak = function(voice, text, callback){
+if (settings.silentMode) {
+    say.speak = function (voice, text, callback) {
 	console.log({
-	    voice : voice,
-	    text : text
+	    voice: voice,
+	    text: text
 	});
 	if (callback) {
 	    callback();
@@ -17,41 +18,46 @@ if (settings.silentMode){
     };
 }
 
-function checkQuit(key){
+function checkQuit(key) {
     return (key && key.ctrl && key.name === 'c');
 }
 
-function checkSettingsChange(key){
+function checkSettingsChange(key) {
 
 }
 
-function changeSetting(key){
+function changeSetting(key) {
 
 }
 
-function speakLetter(ch){
-    say.speak(settings.voice, ch);
+function addCharToWords(ch) {
+    if (!settings.wordMode) {
+	return;
+    }
+    wordsBuffer += ch;
 }
 
-function checkSpeakWords(key){
+function checkSpeakWords(key) {
+    if (!settings.wordMode) {
+	return false;
+    }
 
-}
-
-function speakWords(){
-
+    return (key.name === '\n');
 }
 
 process.stdin.on('keypress', function (ch, key) {
-    console.log(ch, key);
+    console.log(ch, key, wordsBuffer);
 
-    if (checkQuit(key)){
+    if (checkQuit(key)) {
 	process.exit();
     }
-    if (checkSettingsChange(key)){
+    if (checkSettingsChange(key)) {
 	changeSetting(key);
     }
-    speakLetter(ch);
-    if (checkSpeakWords(key)){
-	speakWords();
+    say.speak(settings.voice, ch);
+    addCharToWords(ch);
+    if (checkSpeakWords(key)) {
+	say.speak(settings.voice, wordsBuffer);
+	wordsBuffer = '';
     }
 });
