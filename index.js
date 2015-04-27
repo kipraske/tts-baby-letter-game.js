@@ -64,3 +64,5 @@ process.stdin.on('keypress', function (ch, key) {
 		wordsBuffer = '';
 	}
 });
+
+console.log('Now listening for keypresses...');
