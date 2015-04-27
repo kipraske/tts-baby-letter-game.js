@@ -30,12 +30,8 @@ function changeSetting(key) {
 
 }
 
-function addCharToWords(ch) {
-
-}
-
 function checkSpeakWords(key) {
-    return (key.name === 'return');
+    return (key && key.name === 'return');
 }
 
 process.stdin.on('keypress', function (ch, key) {
@@ -45,8 +41,10 @@ process.stdin.on('keypress', function (ch, key) {
     if (checkSettingsChange(key)) {
 	changeSetting(key);
     }
-    say.speak(settings.voice, ch);
-    wordsBuffer += ch;
+    if (ch) {
+	say.speak(settings.voice, ch);
+	wordsBuffer += ch;
+    }
     if (checkSpeakWords(key)) {
 	say.speak(settings.voice, wordsBuffer);
 	wordsBuffer = '';
