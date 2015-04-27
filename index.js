@@ -30,6 +30,15 @@ function changeSetting(key) {
 
 }
 
+function checkSpeakableCharacter(ch){
+	if (!ch || /\s/.test(ch)){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
 function checkSpeakWords(key) {
     return (key && key.name === 'return');
 }
@@ -41,7 +50,7 @@ process.stdin.on('keypress', function (ch, key) {
     if (checkSettingsChange(key)) {
 	changeSetting(key);
     }
-    if (ch) {
+    if (checkSpeakableCharacter(ch)) {
 	say.speak(settings.voice, ch);
 	wordsBuffer += ch;
     }
