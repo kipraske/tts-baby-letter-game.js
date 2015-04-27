@@ -30,7 +30,18 @@ function changeSetting(key) {
 
 }
 
+function addCharToWords(ch) {
+    if (!settings.wordMode) {
+	return;
+    }
+    wordsBuffer += ch;
+}
+
 function checkSpeakWords(key) {
+    if (!settings.wordMode) {
+	return false;
+    }
+
     return (key && key.name === 'return');
 }
 
@@ -43,7 +54,7 @@ process.stdin.on('keypress', function (ch, key) {
     }
     if (ch) {
 	say.speak(settings.voice, ch);
-	wordsBuffer += ch;
+	addCharToWords(ch);
     }
     if (checkSpeakWords(key)) {
 	say.speak(settings.voice, wordsBuffer);
