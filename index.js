@@ -33,7 +33,7 @@ function changeSetting(key) {
 // any non-character letter or backticks will throw an error when it
 // goes through festival
 function checkSpeakableCharacter(ch) {
-    if (ch && /[!-~]/.test(ch) && ch !== '`') {
+    if (ch && /[0-9A-Z]/i.test(ch)) {
 	return true;
     }
     else {
