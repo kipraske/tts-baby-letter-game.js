@@ -22,7 +22,6 @@ function checkQuit(key) {
     if (!settings.canQuit){
 	return false;
     }
-
     return (key && key.ctrl && key.name === 'c');
 }
 
@@ -46,7 +45,6 @@ function checkSpeakWords(key) {
     if (!settings.wordMode) {
 	return false;
     }
-
     return (key && key.name === 'return');
 }
 
