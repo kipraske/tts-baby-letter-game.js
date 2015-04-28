@@ -52,9 +52,6 @@ process.stdin.on('keypress', function (ch, key) {
     if (checkQuit(key)) {
 	process.exit();
     }
-    if (checkSettingsChange(key)) {
-	changeSetting(key);
-    }
     if (checkSpeakableCharacter(ch)) {
 	say.speak(settings.voice, ch);
 	addCharToWords(ch);
