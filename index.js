@@ -22,8 +22,6 @@ function checkQuit(key) {
     return (key && key.ctrl && key.name === 'c');
 }
 
-// any non-character letter or backticks will throw an error when it
-// goes through festival
 function checkSpeakableCharacter(ch) {
     if (ch && /[0-9A-Z]/i.test(ch)) {
 	return true;
