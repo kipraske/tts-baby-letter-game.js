@@ -22,14 +22,6 @@ function checkQuit(key) {
     return (key && key.ctrl && key.name === 'c');
 }
 
-function checkSettingsChange(key) {
-
-}
-
-function changeSetting(key) {
-
-}
-
 // any non-character letter or backticks will throw an error when it
 // goes through festival
 function checkSpeakableCharacter(ch) {

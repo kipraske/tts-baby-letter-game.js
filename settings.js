@@ -5,10 +5,6 @@ module.exports = {
     // program (which is nice if your user is a baby)
     canQuit: true,
 
-    // If set to true, you can change the settings from inside the program
-    // Controls:
-    canChangeSettings: true,
-
     // Which voice you want to use. null will be the default festival voice
     voice: null,
 
