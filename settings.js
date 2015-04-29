@@ -12,6 +12,12 @@ module.exports = {
     // all be read when you hit enter
     wordMode: true,
 
+	// Allow more than one festival instance to be speaking at a time. If set
+	// to false letters will not be spoken outloud while another letter
+	// is being spoken. The sentence from word mode can be said regardless
+	// of this setting.
+	simultaneousLetters: false,
+
     // If set to true, we will output to the console rather than speaking
     // Useful for debugging when you don't have festival working
     silentMode: false
