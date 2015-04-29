@@ -35,7 +35,7 @@ function checkSpeakableCharacter(ch) {
 }
 
 function speakCharacter(ch){
-	if (ch === 'a'){
+	if (ch === 'a' || ch === 'A'){
 		ch = 'ae';
 	}
 	say.speak(settings.voice, ch);
