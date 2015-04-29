@@ -2,6 +2,7 @@ var settings = require('./settings');
 var say = require('say');
 var keypress = require('keypress');
 var wordsBuffer = '';
+var speaking = false;
 
 keypress(process.stdin);
 process.stdin.setRawMode(true);
@@ -34,13 +35,20 @@ function checkSpeakableCharacter(ch) {
     }
 }
 
-function speakCharacter(ch){
+function doneSpeakingCharacter(){
+	speaking = false;
+}
+
+function speakCharacter(ch) {
 	// It seems that most voices pronouce 'a' like the word a instead of
 	// the letter 'A'. We are just tricking it a bit to say the right sounds.
-	if (ch === 'a' || ch === 'A'){
+	if (ch === 'a' || ch === 'A') {
 		ch = 'ae';
 	}
-	say.speak(settings.voice, ch);
+	if (!settings.simultaneousLetters && !speaking) {
+		speaking = true;
+		say.speak(settings.voice, ch, doneSpeakingCharacter);
+	}
 }
 
 function addCharToWords(ch) {

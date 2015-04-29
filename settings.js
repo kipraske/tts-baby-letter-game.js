@@ -16,7 +16,7 @@ module.exports = {
 	// to false letters will not be spoken outloud while another letter
 	// is being spoken. The sentence from word mode can be said regardless
 	// of this setting.
-	simultaneousLetters: false,
+	simultaneousLetters: true,
 
     // If set to true, we will output to the console rather than speaking
     // Useful for debugging when you don't have festival working
