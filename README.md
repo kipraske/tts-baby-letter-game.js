@@ -8,4 +8,26 @@ The main dependencies are [nodejs](https://nodejs.org/) and [festival](http://ww
 
 ## Configuration
 
-There are a few settings you can set in settings.js. Each setting is described inside the settings.js itself. Note that festival is highly configurable as well. If you want something better than the default robot-like voice you may have to install some additional packages for festival.
+There are a few settings you can set in settings.js. Each setting is described inside the settings.js itself. Note that festival is highly configurable as well. If you want something better than the default robot-like voice you may have to install some additional packages for festival. I created these settings so we can adjust it based on the user. I have a 10 month old and a 5 year old, so the baby will just want to hear something happen when you bang on the keys, and the 5 year old will want to make words and sentences. Here are the settings that I am using then:
+
+### Baby
+```javascript
+{
+    canQuit: false,
+    voice: "voice_us1_mbrola",
+    wordMode: false,
+	simultaneousLetters: false,
+    silentMode: false
+}
+```
+
+### 5 Year Old
+```javascript
+{
+    canQuit: true,
+    voice: "voice_us1_mbrola",
+    wordMode: true,
+	simultaneousLetters: true,
+    silentMode: false
+}
+```
