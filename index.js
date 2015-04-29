@@ -35,6 +35,8 @@ function checkSpeakableCharacter(ch) {
 }
 
 function speakCharacter(ch){
+	// It seems that most voices pronouce 'a' like the word a instead of
+	// the letter 'A'. We are just tricking it a bit to say the right sounds.
 	if (ch === 'a' || ch === 'A'){
 		ch = 'ae';
 	}
