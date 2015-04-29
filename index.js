@@ -34,6 +34,13 @@ function checkSpeakableCharacter(ch) {
     }
 }
 
+function speakCharacter(ch){
+	if (ch === 'a'){
+		ch = 'ae';
+	}
+	say.speak(settings.voice, ch);
+}
+
 function addCharToWords(ch) {
     if (!settings.wordMode) {
 	return;
@@ -53,7 +60,7 @@ process.stdin.on('keypress', function (ch, key) {
 	process.exit();
     }
     if (checkSpeakableCharacter(ch)) {
-	say.speak(settings.voice, ch);
+	speakCharacter(ch);
 	addCharToWords(ch);
     }
     if (ch === ' ') {
