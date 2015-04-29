@@ -2,7 +2,7 @@ var settings = require('./settings');
 var say = require('say');
 var keypress = require('keypress');
 var wordsBuffer = '';
-var speaking = false;
+var speakingLock = false;
 
 keypress(process.stdin);
 process.stdin.setRawMode(true);
@@ -35,8 +35,8 @@ function checkSpeakableCharacter(ch) {
     }
 }
 
-function doneSpeakingCharacter(){
-	speaking = false;
+function doneSpeakingCharacter() {
+	speakingLock = false;
 }
 
 function speakCharacter(ch) {
@@ -45,8 +45,10 @@ function speakCharacter(ch) {
 	if (ch === 'a' || ch === 'A') {
 		ch = 'ae';
 	}
-	if (!settings.simultaneousLetters && !speaking) {
-		speaking = true;
+	if (!speakingLock) {
+		if (!settings.simultaneousLetters) {
+			speakingLock = true;
+		}
 		say.speak(settings.voice, ch, doneSpeakingCharacter);
 	}
 }
