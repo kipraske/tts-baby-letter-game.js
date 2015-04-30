@@ -18,6 +18,13 @@ module.exports = {
 	// of this setting.
 	simultaneousLetters: true,
 
+	// Grab a random word that starts with your letter from the linux
+	// Dictionary to make it more like every baby game
+	dictionaryMode: true,
+
+	// Where is the dictionary file?
+	dictionaryPath: 'usr/share/dict/words',
+
     // If set to true, we will output to the console rather than speaking
     // Useful for debugging when you don't have festival working
     silentMode: false
