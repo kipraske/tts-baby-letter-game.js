@@ -1,6 +1,7 @@
 var settings = require('./settings');
 var say = require('say');
 var keypress = require('keypress');
+var child_process = require('child_process');
 var wordsBuffer = '';
 var speakingLock = false;
 var speakLetter = '';
@@ -28,7 +29,10 @@ function checkQuit(key) {
 }
 
 function appendRandomDictionaryWord(ch, then){
-
+	var dictCommand = 'grep ^' + ch + ' ' + settings.dictionaryPath;
+	dictCommand += '| sort --random-sort | head -n 1';
+	console.log(dictCommand);
+	child_process.exec(dictCommand, speakDictionaryResult);
 }
 
 function speakDictionaryResult(err, stdout, stderr){
