@@ -3,6 +3,7 @@ var say = require('say');
 var keypress = require('keypress');
 var wordsBuffer = '';
 var speakingLock = false;
+var speakLetter = '';
 
 keypress(process.stdin);
 process.stdin.setRawMode(true);
@@ -26,12 +27,13 @@ function checkQuit(key) {
     return (key && key.ctrl && key.name === 'c');
 }
 
-function findRandomDictionaryWord(ch){
+function appendRandomDictionaryWord(ch, then){
 
 }
 
-function doneFindingDictionaryWord(err){
-
+function speakDictionaryResult(err, stdout, stderr){
+	var resultText = speakLetter + ".. " + stdout;
+	say.speak(settings.voice, resultText, doneSpeakingCharacter);
 }
 
 function checkSpeakableCharacter(ch) {
@@ -48,16 +50,25 @@ function doneSpeakingCharacter(err) {
 }
 
 function speakCharacter(ch) {
+	if (speakingLock){
+		return;
+	}
+	if (!settings.simultaneousLetters) {
+		speakingLock = true;
+	}
+
 	// It seems that most voices pronouce 'a' like the word a instead of
 	// the letter 'A'. We are just tricking it a bit to say the right sounds.
+	speakLetter = ch;
 	if (ch === 'a' || ch === 'A') {
-		ch = 'ae';
+		speakLetter = 'ae';
 	}
-	if (!speakingLock) {
-		if (!settings.simultaneousLetters) {
-			speakingLock = true;
-		}
-		say.speak(settings.voice, ch, doneSpeakingCharacter);
+
+	if (settings.dictionaryMode){
+		appendRandomDictionaryWord(ch, speakDictionaryResult);
+	}
+	else{
+		say.speak(settings.voice, speakLetter, doneSpeakingCharacter);
 	}
 }
 

@@ -27,6 +27,6 @@ module.exports = {
 
     // If set to true, we will output to the console rather than speaking
     // Useful for debugging when you don't have festival working
-    silentMode: false
+    silentMode: true
 };
 
