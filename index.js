@@ -26,6 +26,14 @@ function checkQuit(key) {
     return (key && key.ctrl && key.name === 'c');
 }
 
+function findRandomDictionaryWord(ch){
+
+}
+
+function doneFindingDictionaryWord(err){
+
+}
+
 function checkSpeakableCharacter(ch) {
     if (ch && /[0-9A-Z]/i.test(ch)) {
 	return true;
@@ -35,7 +43,7 @@ function checkSpeakableCharacter(ch) {
     }
 }
 
-function doneSpeakingCharacter() {
+function doneSpeakingCharacter(err) {
 	speakingLock = false;
 }
 
