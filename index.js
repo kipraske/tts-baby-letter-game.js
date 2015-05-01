@@ -1,10 +1,11 @@
 var settings = require('./settings');
 var say = require('say');
 var keypress = require('keypress');
-var child_process = require('child_process');
+var fs = require('fs');
 var wordsBuffer = '';
 var speakingLock = false;
 var speakLetter = '';
+var dictonaryWord = '';
 
 keypress(process.stdin);
 process.stdin.setRawMode(true);
@@ -28,24 +29,19 @@ function checkQuit(key) {
 	return (key && key.ctrl && key.name === 'c');
 }
 
-function appendRandomDictionaryWord(ch, then) {
-	var dictCommand = 'grep ^' + ch + ' ' + settings.dictionaryPath;
-	dictCommand += ' | sort --random-sort | head -n 1';
-	console.log(dictCommand);
-	child_process.exec(dictCommand, speakDictionaryResult);
+function selectRandomDictionaryWord(ch, then) {
+	fs.readFile(settings.dictionaryPath, function(err, data){
+		var allWords = data.toString();
+		var firstLetterRegex = new RegExp('^' + ch + '.*$', 'igm');
+		var letterWords = allWords.match(firstLetterRegex); //letter words is an array of matches
+		var randIndex = Math.floor((Math.random() * letterWords.length));
+	    dictonaryWord = letterWords[randIndex];
+		then();
+	});
 }
 
-function speakDictionaryResult(err, stdout, stderr) {
-	if (err){
-		console.log(err);
-		return;
-	}
-	if (stderr){
-		console.log(stderr);
-		return;
-	}
-
-	var resultText = speakLetter + ".. " + stdout;
+function speakLetterAndDictonaryWord() {
+	var resultText = speakLetter + ".. " + dictonaryWord;
 	say.speak(settings.voice, resultText, doneSpeakingCharacter);
 }
 
@@ -103,7 +99,7 @@ process.stdin.on('keypress', function (ch, key) {
 	if (checkSpeakableCharacter(ch)) {
 		prepareStateToSpeakCharacter(ch);
 		if (settings.dictionaryMode){
-			appendRandomDictionaryWord(ch, speakDictionaryResult);
+			selectRandomDictionaryWord(ch, speakLetterAndDictonaryWord);
 		}
 		else{
 			say.speak(settings.voice, speakLetter, doneSpeakingCharacter);
