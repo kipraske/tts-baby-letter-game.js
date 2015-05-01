@@ -20,7 +20,7 @@ module.exports = {
 
 	// Grab a random word that starts with your letter from the linux
 	// Dictionary to make it more like every baby game
-	dictionaryMode: false,
+	dictionaryMode: true,
 
 	// Where is the dictionary file?
 	dictionaryPath: '/usr/share/dict/words',
