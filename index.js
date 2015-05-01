@@ -30,12 +30,16 @@ function checkQuit(key) {
 
 function appendRandomDictionaryWord(ch, then) {
 	var dictCommand = 'grep ^' + ch + ' ' + settings.dictionaryPath;
-	dictCommand += '| sort --random-sort | head -n 1';
+	dictCommand += ' | sort --random-sort | head -n 1';
 	console.log(dictCommand);
 	child_process.exec(dictCommand, speakDictionaryResult);
 }
 
 function speakDictionaryResult(err, stdout, stderr) {
+	if (err){
+		console.log(err);
+	}
+
 	var resultText = speakLetter + ".. " + stdout;
 	say.speak(settings.voice, resultText, doneSpeakingCharacter);
 }
@@ -50,6 +54,10 @@ function checkSpeakableCharacter(ch) {
 }
 
 function doneSpeakingCharacter(err) {
+	if (err){
+		console.log(err);
+	}
+
 	speakingLock = false;
 }
 
