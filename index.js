@@ -10,43 +10,43 @@ keypress(process.stdin);
 process.stdin.setRawMode(true);
 
 if (settings.silentMode) {
-    say.speak = function (voice, text, callback) {
-	console.log({
-	    voice: voice,
-	    text: text
-	});
-	if (callback) {
-	    callback();
-	}
-    };
+	say.speak = function (voice, text, callback) {
+		console.log({
+			voice: voice,
+			text: text
+		});
+		if (callback) {
+			callback();
+		}
+	};
 }
 
 function checkQuit(key) {
-    if (!settings.canQuit){
-	return false;
-    }
-    return (key && key.ctrl && key.name === 'c');
+	if (!settings.canQuit) {
+		return false;
+	}
+	return (key && key.ctrl && key.name === 'c');
 }
 
-function appendRandomDictionaryWord(ch, then){
+function appendRandomDictionaryWord(ch, then) {
 	var dictCommand = 'grep ^' + ch + ' ' + settings.dictionaryPath;
 	dictCommand += '| sort --random-sort | head -n 1';
 	console.log(dictCommand);
 	child_process.exec(dictCommand, speakDictionaryResult);
 }
 
-function speakDictionaryResult(err, stdout, stderr){
+function speakDictionaryResult(err, stdout, stderr) {
 	var resultText = speakLetter + ".. " + stdout;
 	say.speak(settings.voice, resultText, doneSpeakingCharacter);
 }
 
 function checkSpeakableCharacter(ch) {
-    if (ch && /[0-9A-Z]/i.test(ch)) {
-	return true;
-    }
-    else {
-	return false;
-    }
+	if (ch && /[0-9A-Z]/i.test(ch)) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 function doneSpeakingCharacter(err) {
@@ -54,7 +54,7 @@ function doneSpeakingCharacter(err) {
 }
 
 function speakCharacter(ch) {
-	if (speakingLock){
+	if (speakingLock) {
 		return;
 	}
 	if (!settings.simultaneousLetters) {
@@ -68,43 +68,43 @@ function speakCharacter(ch) {
 		speakLetter = 'ae';
 	}
 
-	if (settings.dictionaryMode){
+	if (settings.dictionaryMode) {
 		appendRandomDictionaryWord(ch, speakDictionaryResult);
 	}
-	else{
+	else {
 		say.speak(settings.voice, speakLetter, doneSpeakingCharacter);
 	}
 }
 
 function addCharToWords(ch) {
-    if (!settings.wordMode) {
-	return;
-    }
-    wordsBuffer += ch;
+	if (!settings.wordMode) {
+		return;
+	}
+	wordsBuffer += ch;
 }
 
 function checkSpeakWords(key) {
-    if (!settings.wordMode) {
-	return false;
-    }
-    return (key && key.name === 'return');
+	if (!settings.wordMode) {
+		return false;
+	}
+	return (key && key.name === 'return');
 }
 
 process.stdin.on('keypress', function (ch, key) {
-    if (checkQuit(key)) {
-	process.exit();
-    }
-    if (checkSpeakableCharacter(ch)) {
-	speakCharacter(ch);
-	addCharToWords(ch);
-    }
-    if (ch === ' ') {
-	addCharToWords(ch);
-    }
-    if (checkSpeakWords(key)) {
-	say.speak(settings.voice, wordsBuffer);
-	wordsBuffer = '';
-    }
+	if (checkQuit(key)) {
+		process.exit();
+	}
+	if (checkSpeakableCharacter(ch)) {
+		speakCharacter(ch);
+		addCharToWords(ch);
+	}
+	if (ch === ' ') {
+		addCharToWords(ch);
+	}
+	if (checkSpeakWords(key)) {
+		say.speak(settings.voice, wordsBuffer);
+		wordsBuffer = '';
+	}
 });
 
 console.log('Now listening for keypresses...');
