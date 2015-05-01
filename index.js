@@ -66,7 +66,7 @@ function doneSpeakingCharacter(err) {
 	speakingLock = false;
 }
 
-function speakCharacter(ch) {
+function prepareStateToSpeakCharacter(ch){
 	if (speakingLock) {
 		return;
 	}
@@ -80,13 +80,16 @@ function speakCharacter(ch) {
 	if (ch === 'a' || ch === 'A') {
 		speakLetter = 'ae';
 	}
+}
 
-	if (settings.dictionaryMode) {
-		appendRandomDictionaryWord(ch, speakDictionaryResult);
-	}
-	else {
-		say.speak(settings.voice, speakLetter, doneSpeakingCharacter);
-	}
+function speakCharacter(ch) {
+	prepareStateToSpeakCharacter(ch);
+	say.speak(settings.voice, speakLetter, doneSpeakingCharacter);
+}
+
+function speakCharacterAndDictionaryWord(ch){
+	prepareStateToSpeakCharacter(ch);
+	appendRandomDictionaryWord(ch, speakDictionaryResult);
 }
 
 function addCharToWords(ch) {
@@ -108,7 +111,12 @@ process.stdin.on('keypress', function (ch, key) {
 		process.exit();
 	}
 	if (checkSpeakableCharacter(ch)) {
-		speakCharacter(ch);
+		if (settings.dictionaryMode){
+			speakCharacterAndDictionaryWord(ch);
+		}
+		else{
+			speakCharacter(ch);
+		}
 		addCharToWords(ch);
 	}
 	if (ch === ' ') {
