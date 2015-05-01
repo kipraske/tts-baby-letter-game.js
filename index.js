@@ -38,6 +38,11 @@ function appendRandomDictionaryWord(ch, then) {
 function speakDictionaryResult(err, stdout, stderr) {
 	if (err){
 		console.log(err);
+		return;
+	}
+	if (stderr){
+		console.log(stderr);
+		return;
 	}
 
 	var resultText = speakLetter + ".. " + stdout;
