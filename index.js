@@ -56,16 +56,15 @@ function doneSpeakingCharacter(err) {
 	speakingLock = false;
 }
 
-function prepareStateToSpeakCharacter(ch) {
-	if (speakingLock) {
-		return;
-	}
+function setSpeakingLock() {
 	if (!settings.simultaneousLetters) {
 		speakingLock = true;
 	}
+}
 
-	// It seems that most voices pronouce 'a' like the word a instead of
-	// the letter 'A'. We are just tricking it a bit to say the right sounds.
+// It seems that most voices pronouce 'a' like the word a instead of
+// the letter 'A'. We are just tricking it a bit to say the right sounds.
+function prepareCharacter(ch) {
 	speakLetter = ch;
 	if (ch === 'a' || ch === 'A') {
 		speakLetter = 'ae';
@@ -94,8 +93,9 @@ function loadMainKeypressHandler() {
 		if (checkQuit(key)) {
 			process.exit();
 		}
-		if (checkSpeakableCharacter(ch)) {
-			prepareStateToSpeakCharacter(ch);
+		if (!speakingLock && checkSpeakableCharacter(ch)) {
+			setSpeakingLock();
+			prepareCharacter(ch);
 			if (settings.dictionaryMode) {
 				selectRandomDictionaryWord(ch);
 				speakLetterAndDictonaryWord();
@@ -117,7 +117,7 @@ function loadMainKeypressHandler() {
 	console.log('Now listening for keypresses.');
 }
 
-function cacheAllDictionaryWords(next){
+function cacheAllDictionaryWords(next) {
 	console.log('Loading Dictionary...');
 	fs.readFile(settings.dictionaryPath, function (err, data) {
 		cachedFullDictionary = data.toString();
@@ -126,9 +126,9 @@ function cacheAllDictionaryWords(next){
 	});
 }
 
-if (settings.dictionaryMode){
+if (settings.dictionaryMode) {
 	cacheAllDictionaryWords(loadMainKeypressHandler);
 }
-else{
+else {
 	loadMainKeypressHandler();
 }
