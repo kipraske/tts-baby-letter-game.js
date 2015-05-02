@@ -16,6 +16,8 @@ There are a few settings you can set in settings.js. Each setting is described i
     canQuit: false,
     voice: "voice_us1_mbrola",
     wordMode: false,
+	dictionaryMode: true,
+	dictionaryPath: '/usr/share/dict/words',
 	simultaneousLetters: false,
     silentMode: false
 }
@@ -27,6 +29,8 @@ There are a few settings you can set in settings.js. Each setting is described i
     canQuit: true,
     voice: "voice_us1_mbrola",
     wordMode: true,
+	dictionaryMode: false,
+	dictionaryPath: '/usr/share/dict/words',
 	simultaneousLetters: true,
     silentMode: false
 }
